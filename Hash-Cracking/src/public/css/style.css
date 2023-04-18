@@ -1,0 +1,44 @@
+body {
+    background-color: rgba(135, 255, 199, 0.507);
+
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+}
+
+button {
+    background-color: rgba(0, 53, 66, 0.664);
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 15px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.login_form {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /* background-color: rgba(74, 134, 46, 0.849); */
+    width: 300px;
+    margin: auto;
+    border-radius: 15px;
+}
+
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.row {
+    width: 100%!important;
+}
