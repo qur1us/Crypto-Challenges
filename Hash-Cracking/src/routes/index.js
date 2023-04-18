@@ -55,7 +55,7 @@ router.post("/auth/login", logRequest, (req, res) => {
                 "loggedIn": Date.now()
             });
         
-            const encodedCookie = Buffer(cookie).toString('base64');
+            const encodedCookie = Buffer.from(cookie).toString('base64');
         
             res.cookie("VUT", encodedCookie, { 
                 maxAge: 6000 * 60 * 24,
@@ -75,9 +75,9 @@ router.get("/dashboard", needsAuth, logRequest, (req, res) => {
     const cookie = req.cookies.VUT;
     
     if (cookie) {
-        const cookieData = Buffer(cookie, 'base64').toString();
+        const cookieData = Buffer.from(cookie, 'base64').toString();
         
-        // Unsafe. Change to JSON.parse()
+        // Unsafe. Bonus task for the best of the best.
         let username = serialize.unserialize(cookieData).username;
 
         return res.send(`<script>alert("User ${username} logged in!")</script><h1>FLAG{EVERY_HACKER_MUST_KNOW_SOME_JS}</h1>`);

@@ -10,8 +10,6 @@ class Security {
             hash = crypto.createHash("md5").update(hash + salt).digest("hex");
         }
         
-        console.log(hash);
-
         return hash;
     }
 }

@@ -46,7 +46,7 @@ class Database {
             if (err) {
                 console.log("Query failed!");
             } else {
-                console.log(`[+] User ${username} added successfully.`)
+                console.log(`[+] User ${username} added successfully. Hash: ${hash}`)
             }
         });
     }
@@ -61,14 +61,6 @@ class Database {
                 console.log(`[+] User ${username} added successfully.`)
             }
         });
-    }
-
-    validateSession(username, session) {
-        // TODO
-    }
-
-    removeSession(username) {
-        // TODO
     }
 }
 
