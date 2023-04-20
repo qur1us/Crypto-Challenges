@@ -2,19 +2,41 @@
 
 ## Úloha do kybernetickej arény
 
-Úloha pozostáva z analýzy úniku databádzy webovej aplikácie, kde sa nachádzajú zahashované heslá užívateľov a analýzy zdrojového kódu backendu webovej aplikácie. Úlohou študenta bude extrahovať časť zdrojového kódu webovej aplikácie, ktorá sa stará o hashovanie a ukladanie hesiel do databázy a použiť ju do vlastnej implementácie slovníkového útoku.
+Úloha pozostáva z analýzy úniku databádzy webovej aplikácie, kde sa nachádzajú zahashované heslá užívateľov a analýzy zdrojového kódu backendu webovej aplikácie. Úlohou študenta bude použiť logiku zdrojového kódu webovej aplikácie, ktorá sa stará o hashovanie a ukladanie hesiel do databázy a použiť ju do vlastnej implementácie slovníkového útoku.
 
 Zdrojový kód zodpovedný za hashovanie hesiel používa hash typu MD5, avšak heslá užívateľov sú solené fixnou hodnotou dostupnou len z backendu a heslo prejde hashovacou funkciou niekoľko krát. Hash je teda vo formáte MD5 ale na jeho cracknutie nestačí software ako john alebo hashcat, študent musí slovníkový útok implementovať vlastným spôsobom.
 
-K úlohe bude dostupná aj webová aplikácia obsahujúca správu o tom, že chod webové stránky je kvôli kybernetickému útoku pozastavený a poskytne študentovi prihlasovací formulár pre administrátora webového serveru.
+K úlohe je dostupná aj webová aplikácia obsahujúca správu o tom, že chod webové stránky je kvôli kybernetickému útoku pozastavený a poskytne študentovi prihlasovací formulár pre administrátora webového serveru.
 
-Po cracknutí hesla administrátora sa bude môcť študent do webovej aplikácie prihlásiť a tá mu poskytne flagu a úloha bude považovaná za splnenú.
+Po cracknutí hesla administrátora sa bude môcť študent do webovej aplikácie prihlásiť a tá mu poskytne flag a úloha bude považovaná za splnenú.
 
-Úloha bude obsahovať celkom 4 nápovede, každá bude dostupná s penalizáciou 25% bodového zisku za túto úlohu.
+### Priebeh úlohy
+
+#todo 
+
+### Nápovede
+
+Úloha bude obsahovať celkom 4 nápovede, každá bude dostupná s penalizáciou 25% bodového zisku za túto úlohu:
 
 1.  Necrackovať pomocou software ako hashcat či john. Preskúmať akým spôsobom funguje hashovanie hesiel v 
 backende (priložený zdrojový kód). Je potrebné použiť a vhodným spôsobom upraviť funkciu starajúcu sa o hashovanie a ukladanie do databázy a prispôsobiť na slovníkový útok vo vlastnom skripte.
 2.  Pseudo kód pre implementáciu slovníkového útoku
+
+```text
+open file:
+	readhashes()
+
+	for hash in hashes:
+		open file:
+			readwordlist()
+
+			foreach password in wordlist:
+				hashpassword()
+				
+				if original == hashed_password:
+					cracked = True
+```
+
 3. Zdrojový kód slovníkového útoku
 
 ```python
@@ -63,31 +85,35 @@ def main():
 
 ## Tvorba webovej aplikácie
 
-Webová aplikácia bola vyvíjaná v programovacom jazyky **Node.js** a bol použitý webový framework **Express**. Aplikácia obsahuje celkovo 3 routy:
-- `/`
-- `/login`
-- `/dashboard`
+Webová aplikácia bola vyvíjaná v programovacom jazyky **Node.js** a bol použitý webový framework **Express.js**. 
+
+### Ovládanie webového rozhrania
+
+Aplikácia obsahuje celkovo 4 routy, z toho 3 používajúce metódu `GET` a jedna metódu `POST`:
+
+`/`
+- Táto routa vráti študentovi jednoduchú webovú stránku s informáciou o fiktívnom kybernetickom útoku na webový server a odkáže ho na prihlasovací formulár.
+
+`/login`
+- Obsahuje webovú stránku a funkcionalitu prihlasovacieho formulára. Pomocou tohto formulára sa webovej aplikácii pošle `POST` request s prihlasovacími údajmi na na `/auth/login` endpoint a backend webovej aplikácie overí prihlasovacie údaje s údajmi v databáze. Ak študent zadá správne údaje, bude presmerovaný do routy `/dashboard`.
+
+`/dashboard`
+- Po úspešnom prihlásení, prístup na túto routu poskytne študentovi flag vo formáte `FLAG{xxxxxxx}`.
+
+### Ukladanie hesiel do databázy
+
+Súbor `database.js` obsahuje všetky potrebné funkcie pre prácu s `sqlite3` databázou. Samotná databáza sa vytvorí a naplní užívateľmi a heslami pri každom behu webovej aplikácie.
 
 ```js
-router.get("/", logRequest, (req, res) => {
-.
-.
-});
+const db = new Database("webapp.db");
 
-router.get("/login", logRequest, (req, res) => {
-.
-.
-});
-
-router.post("/auth/login", logRequest, (req, res) => {
-.
-.
-});
-
-router.get("/dashboard", needsAuth, logRequest, (req, res) => {
-.
-.
-});
+// Init
+db.connect();
+db.init();
+db.addUser("admin", "billabong");
+db.addUser("jack", "gasdgasdasdgasdgasdfasgrsgh");
+db.addUser("alan", "cora2nasgadfhadfgasdfblack2");
+db.addUser("charlie", "danae0ahdfadfgasdf07");
 ```
 
 Webová aplikácia nie je priamo súčasťou challengu. Ide hlavne o súbor `security.js`, v ktorom sa nachádza funkcia `hashPassword`, ktorú obsahuje vlastnú implementáciu hashovania hesiel s použitím hashovacej funkcie MD5.
@@ -106,7 +132,23 @@ static hashPassword(password) {
     }
 ```
 
-Funkcie používa `salt`, ktorý pridáva za originálne heslo zadané používateľom. Nový hash hashuje 1337 krát a vždy k novému hashu pridá `salt`. Tým sa zaistí necrackovateľnosť bežným software ako [john](https://github.com/openwall/john) či [hashcat](https://hashcat.net/hashcat/).
+Funkcia používa `salt`, ktorý pridáva za originálne heslo zadané používateľom. Nový hash hashuje 1337 krát a vždy k novému hashu pridá `salt`. Tým sa zaistí necrackovateľnosť bežným software ako [john](https://github.com/openwall/john) či [hashcat](https://hashcat.net/hashcat/).
+
+### Logovanie
+
+Webová aplikácia poskytuje aj jednoduché konzolové logovanie jednotlivých requestov:
+
+```text
+➜  src git:(main) ✗ node index.js
+[+] App is running on port 3000.
+.
+.
+GET / from ::ffff:192.168.220.1
+GET /login from ::ffff:192.168.220.1
+POST /auth/login from ::ffff:192.168.220.1
+[+] Login successful.
+GET /dashboard from ::ffff:192.168.220.1
+```
 
 ### Štruktúra
 
@@ -116,18 +158,18 @@ Funkcie používa `salt`, ktorý pridáva za originálne heslo zadané používa
 │       └── style.css
 ├── routes
 │   └── index.js
-├── security.js
 ├── views
-│   ├── dashboard.html
-│   ├── flag.html
 │   ├── index.html
 │   └── login.html
+├── database.js
+├── security.js
+├── index.js
 ├── package.json
 ├── package-lock.json
 └── webapp.db
 ```
 
-### Spustenie webovej aplikácie
+## Inštalácia balíčkov a spustenie webovej aplikácie
 
 ```text
 ➜  src git:(main) ✗ npm install
@@ -146,7 +188,7 @@ Funkcie používa `salt`, ktorý pridáva za originálne heslo zadané používa
 
 Študent nemôže použiť nástroje ako [john](https://github.com/openwall/john) či [hashcat](https://hashcat.net/hashcat/) ale musí vytvoriť vlastné riešenie. Súbor s implementovaným hashovacím algoritmu bude študentom poskytnutý spolu s uniknutými hashmi z databázy a slovníkom, ktorý budú môcť použiť.
 
-```bash
+```text
 ➜  Hash-Cracking git:(main) ✗ python3 solution/kraken.py solution/leak.txt solution/wordlist.txt
 Cracking 1aa601e825516fc648491e4c98e3898f
 [-] Failed to crack.

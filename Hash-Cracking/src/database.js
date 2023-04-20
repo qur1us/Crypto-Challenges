@@ -50,18 +50,6 @@ class Database {
             }
         });
     }
-
-    addSession(username, cookie) {
-        let stmt = this.db.prepare("INSERT INTO sessions (username, session) VALUES (?,?)");
-
-        stmt.run(username, cookie, (err) => {
-            if (err) {
-                console.log("Query failed!");
-            } else {
-                console.log(`[+] User ${username} added successfully.`)
-            }
-        });
-    }
 }
 
 module.exports = Database;

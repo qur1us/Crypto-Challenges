@@ -37,9 +37,9 @@ def main():
                     sys.stdout.write(f"\r{password.decode('utf-8')}")
                     sys.stdout.flush()
                     
-                    h_password = hashlib.md5((password.decode('utf-8') + salt).encode('utf-8')).hexdigest()
+                    h_password = password.decode('utf-8')
 
-                    for i in range(1337):
+                    for i in range(1338):
                         h_password = hashlib.md5((h_password + salt).encode('utf-8')).hexdigest()
 
                     if h_password == line:
