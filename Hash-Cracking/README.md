@@ -20,7 +20,6 @@ backende (priložený zdrojový kód). Je potrebné použiť a vhodným spôsobo
 ```python
 .
 .
-.
 def main():
     hash_file = sys.argv[1]
     wordlist = sys.argv[2]
@@ -31,29 +30,31 @@ def main():
         lines = h.readlines()
         
         for line in lines:
-            print(f"Cracking {line[:-1]}")
+            line = line[:-1]
             cracked = False
+
+            print(f"Cracking {line}")
 
             with open(wordlist, 'rb') as w:
                 passwords = w.readlines()
                 
                 for password in passwords:
-                    sys.stdout.write(f"\r{password[:-1].decode('utf-8')}")
+                    password = password[:-1]
+                    sys.stdout.write(f"\r{password.decode('utf-8')}")
                     sys.stdout.flush()
                     
-                    h_password = hashlib.md5((password[:-1].decode('utf-8') + salt).encode('utf-8')).hexdigest()
+                    h_password = hashlib.md5((password.decode('utf-8') + salt).encode('utf-8')).hexdigest()
 
                     for i in range(1337):
                         h_password = hashlib.md5((h_password + salt).encode('utf-8')).hexdigest()
 
-                    if h_password == line[:-1]:
-                        print(f"\r[+] Hash cracked: {password.decode('utf-8')}")
+                    if h_password == line:
+                        print(f"\r[+] Hash cracked: {password.decode('utf-8')}\n")
                         cracked = True
                         break
             
             if not cracked:
                 print("\r[-] Failed to crack.\n")
-.
 .
 .
 ```
@@ -71,11 +72,9 @@ Webová aplikácia bola vyvíjaná v programovacom jazyky **Node.js** a bol pou�
 router.get("/", logRequest, (req, res) => {
 .
 .
-.
 });
 
 router.get("/login", logRequest, (req, res) => {
-.
 .
 .
 });
@@ -83,11 +82,9 @@ router.get("/login", logRequest, (req, res) => {
 router.post("/auth/login", logRequest, (req, res) => {
 .
 .
-.
 });
 
 router.get("/dashboard", needsAuth, logRequest, (req, res) => {
-.
 .
 .
 });
@@ -133,6 +130,9 @@ Funkcie používa `salt`, ktorý pridáva za originálne heslo zadané používa
 ### Spustenie webovej aplikácie
 
 ```text
+➜  src git:(main) ✗ npm install
+.
+.
 ➜  src git:(main) ✗ node index.js
 [+] App is running on port 3000.
 
@@ -144,4 +144,19 @@ Funkcie používa `salt`, ktorý pridáva za originálne heslo zadané používa
 
 ## Riešenie
 
-Študent nemôže použiť nástroje ako [john](https://github.com/openwall/john) či [hashcat](https://hashcat.net/hashcat/) ale musí vytvoriť vlastné riešenie. Vyššie uvedený súbor bude študentom poskytnutý spolu s uniknutými hashmi z databázy.
+Študent nemôže použiť nástroje ako [john](https://github.com/openwall/john) či [hashcat](https://hashcat.net/hashcat/) ale musí vytvoriť vlastné riešenie. Súbor s implementovaným hashovacím algoritmu bude študentom poskytnutý spolu s uniknutými hashmi z databázy a slovníkom, ktorý budú môcť použiť.
+
+```bash
+➜  Hash-Cracking git:(main) ✗ python3 solution/kraken.py solution/leak.txt solution/wordlist.txt
+Cracking 1aa601e825516fc648491e4c98e3898f
+[-] Failed to crack.
+
+Cracking 09c8f81a561ab3efb21379b80d701fd7
+[-] Failed to crack.
+
+Cracking 0d9e0aace6207569832f3d5df72d7589
+[+] Hash cracked: billabong
+
+Cracking 45e986230061621f0f7b95e3913910f
+[-] Failed to crack.
+```
