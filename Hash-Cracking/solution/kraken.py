@@ -24,23 +24,26 @@ def main():
         lines = h.readlines()
         
         for line in lines:
-            print(f"Cracking {line[:-1]}")
+            line = line[:-1]
             cracked = False
+
+            print(f"Cracking {line}")
 
             with open(wordlist, 'rb') as w:
                 passwords = w.readlines()
                 
                 for password in passwords:
-                    sys.stdout.write(f"\r{password[:-1].decode('utf-8')}")
+                    password = password[:-1]
+                    sys.stdout.write(f"\r{password.decode('utf-8')}")
                     sys.stdout.flush()
                     
-                    h_password = hashlib.md5((password[:-1].decode('utf-8') + salt).encode('utf-8')).hexdigest()
+                    h_password = hashlib.md5((password.decode('utf-8') + salt).encode('utf-8')).hexdigest()
 
                     for i in range(1337):
                         h_password = hashlib.md5((h_password + salt).encode('utf-8')).hexdigest()
 
-                    if h_password == line[:-1]:
-                        print(f"\r[+] Hash cracked: {password.decode('utf-8')}")
+                    if h_password == line:
+                        print(f"\r[+] Hash cracked: {password.decode('utf-8')}\n")
                         cracked = True
                         break
             

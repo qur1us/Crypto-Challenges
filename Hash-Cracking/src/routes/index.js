@@ -32,12 +32,11 @@ router.get("/login", logRequest, (req, res) => {
 router.post("/auth/login", logRequest, (req, res) => {
 
     const { username, password } = req.body;
-
+    const hash = Security.hashPassword(password);
     const db = new Database("webapp.db");
+     
     db.connect();
  
-    const hash = Security.hashPassword(password);
-
     let stmt = db.db.prepare("SELECT username FROM users WHERE username = ? AND password = ?");
 
     stmt.get(username, hash, (err, row) => {
