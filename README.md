@@ -8,3 +8,5 @@ V případě potřeby připravte pro prostředí praktické části scénáře v
 
 Projekt naprogramujte ve Vámi zvoleném programovacím jazyku s využitím dostupných knihoven. Podmínkou pro realizaci je návrh scénáře (jednotlivé kroky scénáře a co v nich bude náplní) již v rámci studie projektu, která se odevzdává 6. týden semestru.
 
+## Závěr
+Cílem projektu bylo vytvořit edukační scénář na vybraná témata z aplikované kryptografie, které odpovídají náplni předmětu MPC-KRY. Tohoto cíle bylo dosaženo. Součástí řešení je textové zadání úloh, programy realizující jednotlivé úlohy, nápovědy k řešení, jedno správné řešení a závěrečný test.
