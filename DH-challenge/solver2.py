@@ -37,6 +37,10 @@ if __name__ == '__main__':
     parser.add_argument('-i', '--ip', dest='ip', required=True, type=str)
     parser.add_argument('-p', '--port', dest='port', required=True, type=int)
     args = parser.parse_args()
+    
+    # Different solution approaches
+    solution = 0
+    #solution = 1
 
     s = TCPConnection()
     s.connect(args.ip, args.port)
@@ -44,7 +48,7 @@ if __name__ == '__main__':
     data += s.readline()
     data += s.readline()
     data += s.readline()
-    s.send(b'1')
+    s.send(str(solution).encode())
     data += s.readline()
     data += s.readline()
     data += s.readline()
@@ -55,7 +59,7 @@ if __name__ == '__main__':
     json_str = re.findall(r"{.+[:,].+}|\[.+[,:].+\]", data)[0]
 	
     try:
-        flag = decrypt(json_str, 1)
+        flag = decrypt(json_str, solution)
     except:
         print("Decryption or verification of the message failed!")
         exit()

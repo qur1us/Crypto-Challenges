@@ -6,6 +6,10 @@ import (
 	"math/big"
 )
 
+func toHexInt(n *big.Int) string {
+	return fmt.Sprintf("0x%x", n) // or %x or upper case
+}
+
 func rsa_keygen(p *big.Int, q *big.Int, e *big.Int) *big.Int {
 
 	phi_n, d, pminus1, qminus1, bigOne := big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(0), big.NewInt(1)
@@ -27,23 +31,24 @@ func encrypt(message *big.Int, key *big.Int, n *big.Int) *big.Int {
 }
 
 func main() {
-	flag := []byte("FLAG{n3vEr_3Ver_sH4r3_pR1m35_w1tH_y0Ur_fR13nd5}") //FLAG{WiTh_fR13nd5_5h4r3_m3m0r13s_d0n't_sH4r3_y0Ur_pR1m35!}
+	flag := []byte("FLAG{---REDACTED---}")
 
 	//Generate safe primes for RSA
-	p, _ := rand.Prime(rand.Reader, 4096)
-	q, _ := rand.Prime(rand.Reader, 4096)
-
 	fmt.Println("\nGenerating primes...")
-	fmt.Println("p: ", p)
-	fmt.Println("q: ", q)
+	p, _ := rand.Prime(rand.Reader, 4096)
+	fmt.Println("\nFirst prime found.")
+	q, _ := rand.Prime(rand.Reader, 4096)
+	fmt.Println("\nSecond prime found.")
 
-	n := big.NewInt(0)
-	n = n.Mul(p, q)
+	//fmt.Println("p: ", p)
+	//fmt.Println("q: ", q)
 
 	fmt.Println("\nCalculating modulus...")
-	fmt.Println("n: ", n)
+	n := big.NewInt(0)
+	n = n.Mul(p, q)
+	fmt.Println("n: ", toHexInt(n))
 
-	//Use Fermat primes as public keys
+	//Use Fermat primes as public keys -> faster modular exponentiation
 	Alice_pub, Bob_pub := big.NewInt(65537), big.NewInt(257)
 	fmt.Println("\nGenerating keys...")
 
@@ -53,14 +58,12 @@ func main() {
 	//suppress compilation error
 	_, _ = Alice_priv, Bob_priv
 
-	fmt.Println("Alice Public Key: ", Alice_pub)
-	fmt.Println("Bob Public Key: ", Bob_pub)
+	fmt.Println("Alice Public Key: ", toHexInt(Alice_pub))
+	fmt.Println("Bob Public Key: ", toHexInt(Bob_pub))
 
 	Alice_cipher := encrypt(new(big.Int).SetBytes(flag), Alice_pub, n)
 	Bob_cipher := encrypt(new(big.Int).SetBytes(flag), Bob_pub, n)
 
-	fmt.Println("\nAlice's encrypted flag: ", Alice_cipher)
-	fmt.Println("\nBob's encrypted flag: ", Bob_cipher)
-
-	///fmt.Println("\nPlaintext: ", new(big.Int).SetBytes(flag))
+	fmt.Println("\nAlice's encrypted flag: ", toHexInt(Alice_cipher))
+	fmt.Println("\nBob's encrypted flag: ", toHexInt(Bob_cipher))
 }
