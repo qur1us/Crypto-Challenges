@@ -1,6 +1,6 @@
 import gmpy2
 from Crypto.Util.number import long_to_bytes
-import argparse, pbkdf2, json, socket, re
+import argparse, socket, re
 
 class TCPConnection:
     def __init__(self, sock=None):
