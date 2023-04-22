@@ -1,5 +1,5 @@
-from Crypto.Cipher import AES
 import argparse, pbkdf2, json, socket, re
+from Crypto.Cipher import AES
 from base64 import b64decode
 
 class TCPConnection:

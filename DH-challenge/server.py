@@ -1,13 +1,7 @@
+import random, socketserver, signal, os, json, pbkdf2
 from Crypto.Cipher import AES
 from Crypto.Util.number import getPrime
-import random
-import socketserver
-import signal
-import os
-import pbkdf2
 from base64 import b64encode
-import json
-
 
 FLAG = b"FLAG{SuP3r_S3cRe7_fL4g_f0R_T3s71nG}"
 p = getPrime(2048)

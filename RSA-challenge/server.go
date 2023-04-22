@@ -18,7 +18,7 @@ const (
 )
 
 func toHexInt(n *big.Int) string {
-	return fmt.Sprintf("0x%x", n) // or %x or upper case
+	return fmt.Sprintf("0x%x", n)
 }
 
 func rsa_keygen(p *big.Int, q *big.Int, e *big.Int) *big.Int {
@@ -49,9 +49,6 @@ func handleIncomingRequest(conn net.Conn) {
 	q, _ := rand.Prime(rand.Reader, BITSIZE)
 	conn.Write([]byte("Second prime found."))
 
-	//conn.Write([]byte("p: ", p)
-	//conn.Write([]byte("q: ", q)
-
 	conn.Write([]byte("\nCalculating modulus..."))
 	n := big.NewInt(0)
 	n = n.Mul(p, q)
@@ -66,7 +63,7 @@ func handleIncomingRequest(conn net.Conn) {
 
 	fmt.Println("[*] Key generation completed.")
 
-	//suppress compilation error
+	//suppress compilation error (unused variable)
 	_, _ = Alice_priv, Bob_priv
 
 	conn.Write([]byte("\nAlice's Public Key: " + toHexInt(Alice_pub)))

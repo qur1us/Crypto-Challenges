@@ -1,6 +1,5 @@
-import gmpy2
+import gmpy2, argparse, socket, re
 from Crypto.Util.number import long_to_bytes
-import argparse, socket, re
 
 class TCPConnection:
     def __init__(self, sock=None):
