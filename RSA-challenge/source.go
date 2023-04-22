@@ -3,7 +3,18 @@ package main
 import (
 	"crypto/rand"
 	"fmt"
+	"log"
 	"math/big"
+	"net"
+	"os"
+)
+
+const (
+	HOST    = "localhost"
+	PORT    = "1337"
+	TYPE    = "tcp"
+	FLAG    = "FLAG{SuP3r_S3cRe7_fL4g_f0R_T3s71nG}"
+	BITSIZE = 4096
 )
 
 func toHexInt(n *big.Int) string {
@@ -30,40 +41,67 @@ func encrypt(message *big.Int, key *big.Int, n *big.Int) *big.Int {
 	return cipher
 }
 
-func main() {
-	flag := []byte("FLAG{---REDACTED---}")
-
+func handleIncomingRequest(conn net.Conn) {
 	//Generate safe primes for RSA
-	fmt.Println("\nGenerating primes...")
-	p, _ := rand.Prime(rand.Reader, 4096)
-	fmt.Println("\nFirst prime found.")
-	q, _ := rand.Prime(rand.Reader, 4096)
-	fmt.Println("\nSecond prime found.")
+	conn.Write([]byte("\nGenerating primes... (this might take a while)"))
+	p, _ := rand.Prime(rand.Reader, BITSIZE)
+	conn.Write([]byte("\nFirst prime found."))
+	q, _ := rand.Prime(rand.Reader, BITSIZE)
+	conn.Write([]byte("Second prime found."))
 
-	//fmt.Println("p: ", p)
-	//fmt.Println("q: ", q)
+	//conn.Write([]byte("p: ", p)
+	//conn.Write([]byte("q: ", q)
 
-	fmt.Println("\nCalculating modulus...")
+	conn.Write([]byte("\nCalculating modulus..."))
 	n := big.NewInt(0)
 	n = n.Mul(p, q)
-	fmt.Println("n: ", toHexInt(n))
+	conn.Write([]byte("\nn: " + toHexInt(n)))
 
 	//Use Fermat primes as public keys -> faster modular exponentiation
 	Alice_pub, Bob_pub := big.NewInt(65537), big.NewInt(257)
-	fmt.Println("\nGenerating keys...")
+	conn.Write([]byte("\n\nGenerating keys..."))
 
 	Alice_priv := rsa_keygen(p, q, Alice_pub)
 	Bob_priv := rsa_keygen(p, q, Bob_pub)
 
+	fmt.Println("[*] Key generation completed.")
+
 	//suppress compilation error
 	_, _ = Alice_priv, Bob_priv
 
-	fmt.Println("Alice Public Key: ", toHexInt(Alice_pub))
-	fmt.Println("Bob Public Key: ", toHexInt(Bob_pub))
+	conn.Write([]byte("\nAlice's Public Key: " + toHexInt(Alice_pub)))
+	conn.Write([]byte("\nBob's Public Key: " + toHexInt(Bob_pub)))
 
-	Alice_cipher := encrypt(new(big.Int).SetBytes(flag), Alice_pub, n)
-	Bob_cipher := encrypt(new(big.Int).SetBytes(flag), Bob_pub, n)
+	Alice_cipher := encrypt(new(big.Int).SetBytes([]byte(FLAG)), Alice_pub, n)
+	Bob_cipher := encrypt(new(big.Int).SetBytes([]byte(FLAG)), Bob_pub, n)
 
-	fmt.Println("\nAlice's encrypted flag: ", toHexInt(Alice_cipher))
-	fmt.Println("\nBob's encrypted flag: ", toHexInt(Bob_cipher))
+	conn.Write([]byte("\n\nAlice's encrypted flag: " + toHexInt(Alice_cipher)))
+	conn.Write([]byte("\n\nBob's encrypted flag: " + toHexInt(Bob_cipher)))
+	fmt.Println("[*] Flags sent.")
+	conn.Write([]byte("\nClosing channel."))
+
+	// close conn
+	conn.Close()
+	fmt.Println("[*] Channel closed.")
+
+}
+
+func main() {
+
+	listen, err := net.Listen(TYPE, HOST+":"+PORT)
+	fmt.Println("[*] Server running.")
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+	// close listener
+	defer listen.Close()
+	for {
+		conn, err := listen.Accept()
+		if err != nil {
+			log.Fatal(err)
+			os.Exit(1)
+		}
+		go handleIncomingRequest(conn)
+	}
 }

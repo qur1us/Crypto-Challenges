@@ -90,7 +90,6 @@ def main():
     s.connect(args.ip, args.port)
     
     data = s.recvall()
-    #print(data)
     
     n = re.search(r"n: .*", data)
     n = hex2int(n[0])

@@ -44,37 +44,35 @@ def encrypt(message, shared_secret):
 
 
 def main(s):
+    sendMessage(s, "\nGenerating DH Parameters...")
+    sendMessage(s, f"\ng = {g}, p = {p}")
+    sendMessage(s, "\nGenerating the Public Key...")
+    
     a = random.randrange(2, p - 1)
     A = pow(g, a, p)
+    
+    sendMessage(s, "\nCalculation Completed!")
+    sendMessage(s, "\nPublic Key is: ???")
 
-    sendMessage(s, "Generating DH Parameters...\n")
-    sendMessage(s, f"g = {g}, p = {p}\n\n")
-    sendMessage(s, "Set-up Sequence Complete!\n\n")
-
-    sendMessage(s, "Generating the Public Key...\n")
-
-    sendMessage(s, "Calculation Completed!\n")
-    sendMessage(s, "Public Key is: ???\n\n")
-
-    B = recieveMessage(s, "Enter Your Public Key: ")
+    B = recieveMessage(s, "\nEnter Your Public Key: ")
     print("[*] Public Key received")
 
     try:
         B = int(B)
     except:
-        sendMessage(s, f"Can't convert {B} to INT\n")
+        sendMessage(s, f"\nCan't convert {B} to INT")
         exit()
 
-    sendMessage(s, "\n" + "Calculating The Shared Secret\n")
+    sendMessage(s, "\nCalculating The Shared Secret")
     shared_secret = pow(B, a, p)
     print(f"[*] Shared secret: {shared_secret}")
-    sendMessage(s, "Calculation Complete\n\n")
+    sendMessage(s, "\nCalculation Complete")
 
-    sendMessage(s, "Encrypting Flag with shared_secret...\n")
+    sendMessage(s, "\nEncrypting Flag with shared_secret...")
     result = encrypt(FLAG, shared_secret)
-    sendMessage(s, f"Here is The Encrypted Flag: {result}\n")
+    sendMessage(s, f"\nHere is The Encrypted Flag: {result}")
     print("[*] Sending Flag")
-    sendMessage(s, "Closing Channel...\n\n")
+    sendMessage(s, "\nClosing Channel.")
     exit()
 
 
