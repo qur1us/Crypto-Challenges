@@ -32,6 +32,7 @@ Ke spuštění aplikace je potřeba mít nainstalovaný `python3` a moduly použ
 Instalaci modulů je velmi doporučeno provést do virtuálního prostředí (`venv`). K tomu lze uvnitř této složky použít následující příkazy:
 ```shell
 $ python -m venv .venv
+$ source .venv/bin/activate
 $ pip install -r requirements.txt
 ```
 
@@ -44,4 +45,4 @@ Pokud $B = 1$, pak  $k = B^a = 1^a = 1$.
 Pomocí získaného $k$ pak může dešifrovat obdrženou zprávu a získat tak vlajku.
 
 # Řešení
-K řešení úlohy lze využít [tento](DH-challenge/solver.py) script.
+K řešení úlohy lze využít [tento](solver.py) script.

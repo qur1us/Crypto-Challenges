@@ -88,4 +88,4 @@ Potom:
 $$c_1^x \cdot c_2^y = (M^{e_1})^x \cdot (M^{e_2})^y = M^{e_1x} \cdot M^{e_2y}=M^{e_1x + e_2y} = M^1$$
 
 # Řešení
-K řešení úlohy lze využít [tento](RSA-challenge/solver.py) script.
+K řešení úlohy lze využít [tento](solver.py) script.
