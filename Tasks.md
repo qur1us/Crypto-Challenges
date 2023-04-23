@@ -1,0 +1,143 @@
+# Úkol 1
+
+## Nápovědy
+
+**Požádat o nápovědu 1 (penalizace 25 %)**
+Zaměř se na společné parametry obdržených zpráv.
+
+**Požádat o nápovědu 2 (penalizace 50 %)**
+Zkus vyhledat více informací k útoku na společný modulus (RSA common modulus attack).
+
+**Požádat o nápovědu 3 (penalizace 75 %)**
+Útok na společný modulus je vhodně popsán [zde](https://infosecwriteups.com/rsa-attacks-common-modulus-7bdb34f331a5#84d1).
+
+**Požádat o nápovědu 4 (penalizace 100 %)**
+
+`FLAG{N3veR_sH4r3_pr1m3S_w17h_y0uR_fR13nd5}`
+
+# Úkol 2
+
+## Nápovědy
+
+**Požádat o nápovědu 1 (penalizace 25 %)**
+Zaměř se na to jakým způsobem aplikace vypočítá klíč $k$, kterým zašifruje text vlajky.
+
+**Požádat o nápovědu 2 (penalizace 50 %)**
+Zkus odeslat takové $B$, aby dohodnutý šifrovací klíč $k$ byl předvídatelný.
+
+**Požádat o nápovědu 3 (penalizace 75 %)**
+Zkus odeslat $B=1$.
+
+**Požádat o nápovědu 4 (penalizace 100 %)**
+`FLAG{N0th1n6_1S_tRu3_eV3ryTh1nG_i5_p3rM173D}`
+
+# Úkol 3
+
+Tvojou úlohou bude zanalyzovať zdrojový kód webovej aplikácie a pomocou získaných informácii sa pokúsiť cracknúť niekoľko uniknutých hashov užívateľov webovej aplikácie. Ak sa ti podarí nejaký z hashov cracknúť, môžeš sa do webovej aplikácie prihlásiť do jeho účtu.
+
+## Nápovědy
+
+**Požádat o nápovědu 1 (penalizace 25 %)**
+
+Necrackovať pomocou software ako hashcat či john. Preskúmať akým spôsobom funguje hashovanie hesiel v  zdrojovom kóde. Je potrebné použiť a vhodným spôsobom upraviť funkciu starajúcu sa o hashovanie a ukladanie do databázy a prispôsobiť na slovníkový útok vo vlastnom skripte.
+
+**Požádat o nápovědu 2 (penalizace 50 %)**
+
+Pseudo kód pre implementáciu slovníkového útoku:
+
+```python
+open file:
+	readhashes()
+
+	for hash in hashes:
+		open file:
+			readwordlist()
+
+			for password in wordlist:
+				hashpassword()
+				
+				if original == hashed_password:
+					cracked = True
+```
+
+**Požádat o nápovědu 3 (penalizace 75 %)**
+
+```python
+.
+.
+def main():
+    hash_file = sys.argv[1]
+    wordlist = sys.argv[2]
+
+    salt = "za1&P^tMvkvz#Xe%7B4j"
+
+    with open(hash_file, 'r') as h:
+        lines = h.readlines()
+        
+        for line in lines:
+            line = line[:-1]
+            cracked = False
+
+            print(f"Cracking {line}")
+
+            with open(wordlist, 'rb') as w:
+                passwords = w.readlines()
+                
+                for password in passwords:
+                    password = password[:-1]
+                    sys.stdout.write(f"\r{password.decode('utf-8')}")
+                    sys.stdout.flush()
+                    
+                    h_password = hashlib.md5((password.decode('utf-8') + salt).encode('utf-8')).hexdigest()
+
+                    for i in range(1337):
+                        h_password = hashlib.md5((h_password + salt).encode('utf-8')).hexdigest()
+
+                    if h_password == line:
+                        print(f"\r[+] Hash cracked: {password.decode('utf-8')}\n")
+                        cracked = True
+                        break
+            
+            if not cracked:
+                print("\r[-] Failed to crack.\n")
+.
+.
+```
+
+**Požádat o nápovědu 4 (penalizace 100 %)**
+
+`FLAG{EVERY_HACKER_MUST_KNOW_SOME_JS}`
+
+# Úkol 4
+
+## Nápovědy
+
+**Požádat o nápovědu 1 (penalizace 25 %)**
+
+
+
+**Požádat o nápovědu 2 (penalizace 50 %)**
+
+
+
+**Požádat o nápovědu 3 (penalizace 75 %)**
+
+
+
+**Požádat o nápovědu 4 (penalizace 100 %)**
+
+
+# Otázky
+
+## 1. 
+
+## 2.
+
+## 3. Ktoré tvrdenia nie sú správe?
+
+1. Pri dnešných grafických kartách (napr. Nvidia RTX 4090) je úspešnosť slovníkových útokov voči heslám užívateľov 100% (do 24h)
+2. Iteratívne hashovanie s použitím slabších hashovacích funkcii (MD5, SHA1) je imunné voči slovníkovým útokom
+3. Hashovacia funkcia môže byť okrem iného (s použitím dostatočne silnej kryptografickej soli o dĺžke aspoň 192 bit) veľmi efektívna aj ako symetrická šifra
+4. **Hashovacia funkcia `bcrypt` je násobne pomalšia ako funkcia `SHA-512`**
+
+## 4.
