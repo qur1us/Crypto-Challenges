@@ -156,4 +156,9 @@ def main():
 3. Hashovacia funkcia môže byť okrem iného (s použitím dostatočne silnej kryptografickej soli o dĺžke aspoň 192 bit) veľmi efektívna aj ako symetrická šifra
 4. **Hashovacia funkcia `bcrypt` je násobne pomalšia ako funkcia `SHA-512`**
 
-## 4.
+## 4. Která z těchto tvrzení jsou správná?
+
+1. Zranitelnost aplikace lze opravit zavedením antivirového řešení na straně serveru.
+2. Zranitelnost aplikace lze opravit zvýšením velikosti seedu na alespoň 128 bitů.
+3. Seed kryptografického generátoru náhodných čísel je veřejný parametr generátoru.
+4. Seed kryptografického generátoru náhodných čísel je tajný parametr generátoru.
