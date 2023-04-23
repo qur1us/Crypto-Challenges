@@ -18,5 +18,11 @@ Tato úloha se zaměřuje na pochopení Diffie-Helman protokolu. Úkolem řešit
 
 Detailní popis úlohy je k nalezení [zde](DH-challenge/README.md)
 
+## Úkol 3
+
+Táto úloha sa zameriava na problematiku slovníkových útokov. Nakoľko je princíp slovníkových útokov relatívne jednoznačný, úloha poukazuje na jednu z mnohých neštandardných implementácii ukladania hesiel užívateľov do databází (solenie hesiel hodnotou známou len servrom, rôzny počet iterácii a pod.). Úlohou riešiteľa bude vyčítať zo zdrojového kódu metódu hashovania hesiel a použiť ju pri realizácii slovníkového útoku voči dostupnému súboru s uniknutými hashmi z databázy. Cracknutie hesla mu umožní sa prihlásiť do webovej aplikácie, kde získa vlajku.
+
+Detailný popis ulohy je možné nájsť [tu](Hash-Cracking/README.md)
+
 ## Závěr
 Cílem projektu bylo vytvořit edukační scénář na vybraná témata z aplikované kryptografie, které odpovídají náplni předmětu MPC-KRY. Tohoto cíle bylo dosaženo. Součástí řešení je textové zadání úloh, programy realizující jednotlivé úlohy, nápovědy k řešení, jedno správné řešení a závěrečný test.
