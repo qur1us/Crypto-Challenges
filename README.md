@@ -24,5 +24,10 @@ Táto úloha sa zameriava na problematiku slovníkových útokov. Nakoľko je pr
 
 Detailný popis ulohy je možné nájsť [tu](Hash-Cracking/README.md)
 
+## Úkol 4
+Tato úloha se zaměřuje na bezpečné generování náhodných čísel. Cílem řešitele je zanalyzovat zdrojový kód aplikace a odhalit únik hodnoty "seed", použité pro generování náhodného názvu souboru s vlajkou. Se znalostí hodnoty seed bude řešitel schopen získat vlajku.
+
+Detailní popis úlohy je k nalezení [zde](RNG-seed/README.md)
+
 ## Závěr
 Cílem projektu bylo vytvořit edukační scénář na vybraná témata z aplikované kryptografie, které odpovídají náplni předmětu MPC-KRY. Tohoto cíle bylo dosaženo. Součástí řešení je textové zadání úloh, programy realizující jednotlivé úlohy, nápovědy k řešení, jedno správné řešení a závěrečný test.
