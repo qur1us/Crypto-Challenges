@@ -145,3 +145,7 @@ Z nalezeného záznamu pomocí regulárního výrazu extrahuje datum a čas, kte
 Získaný timestamp použije pro rekonstrukci názvu souboru uživatele admin.
 
 Následně si od aplikace vyžádá stažení daného souboru a opět s využitím regulárního výrazu extrahuje z odpovědi vlajku.
+
+# Spuštění aplikací
+
+Všechny 3 aplikace lze spustit příkazem `cargo run` po vstupu do jejich adresáře. Cargo pomocí souboru `Cargo.toml` stáhne a zkompiluje všechny potřebné soubory a následně aplikaci spustí.
