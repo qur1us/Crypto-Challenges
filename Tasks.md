@@ -170,4 +170,4 @@ Funkce generate_secure_filename loguje timestamp, který zároveň používá ja
 1. Zranitelnost aplikace lze opravit zavedením antivirového řešení na straně serveru.
 2. Zranitelnost aplikace lze opravit zvýšením velikosti seedu na alespoň 128 bitů.
 3. Seed kryptografického generátoru náhodných čísel je veřejný parametr generátoru.
-4. Seed kryptografického generátoru náhodných čísel je tajný parametr generátoru.
+4. **Seed kryptografického generátoru náhodných čísel je tajný parametr generátoru**.
