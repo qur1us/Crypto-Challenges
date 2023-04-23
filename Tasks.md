@@ -39,6 +39,7 @@ Zkus odeslat takové $B$, aby dohodnutý šifrovací klíč $k$ byl předvídate
 Zkus odeslat $B=1$.
 
 **Požádat o nápovědu 4 (penalizace 100 %)**
+
 `FLAG{N0th1n6_1S_tRu3_eV3ryTh1nG_i5_p3rM173D}`
 
 # Úkol 3
@@ -120,21 +121,25 @@ def main():
 
 # Úkol 4
 
+Získal/a jsi přístup k síťové aplikaci a jejímu zdrojovému kódu. Zdá se, že se jedná o jednoduchého správce hesel, který si administrátor sám napsal. Opravdu by se ti hodilo získat jeho hesla... Není možné se k jeho heslům skrze aplikaci nějak dostat? Ten zdrojový kód by se mohl hodit.
+
 ## Nápovědy
 
 **Požádat o nápovědu 1 (penalizace 25 %)**
 
-
+Prozkoumejte všechny funkcionality aplikace.
 
 **Požádat o nápovědu 2 (penalizace 50 %)**
 
-
+Využijte poskytnutý zdrojový kód aplikace a podívejte se, jak byly vytvořeny logovací záznamy (MENU volba 9).
 
 **Požádat o nápovědu 3 (penalizace 75 %)**
 
-
+Funkce generate_secure_filename loguje timestamp, který zároveň používá jako seed pro generování náhodného názvu souboru. Vyčtěte z logu aplikace timestamp "Random filename generated" příslušící uživateli admin. Zjištěné datum a čas převeďte na UNIX timestamp a s pomocí výsledné hodnoty znovu vytvořte název souboru uživatele admin a tento soubor následně z aplikace stáhněte.
 
 **Požádat o nápovědu 4 (penalizace 100 %)**
+
+`FLAG{kE3p_s3eD_sEcr37_K3eP_SE3d_5aF3}`
 
 
 # Otázky
