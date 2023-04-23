@@ -1,5 +1,7 @@
 # Úkol 1
 
+Tvým úkolem bude analyzovat zdrojový kód aplikace, identifikovat zranitelnost a následně tuto zranitelnost zneužít k získání vlajky.
+
 ## Nápovědy
 
 **Požádat o nápovědu 1 (penalizace 25 %)**
@@ -19,6 +21,8 @@ Zkus vyhledat více informací k útoku na společný modulus (RSA common modulu
 `FLAG{N3veR_sH4r3_pr1m3S_w17h_y0uR_fR13nd5}`
 
 # Úkol 2
+
+Tvým úkolem bude analyzovat zdrojový kód aplikace, identifikovat zranitelnost a následně tuto zranitelnost zneužít k získání vlajky.
 
 ## Nápovědy
 
