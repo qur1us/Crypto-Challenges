@@ -2,7 +2,7 @@
 
 ## Úloha do kybernetickej arény
 
-Úloha pozostáva z analýzy úniku databádzy webovej aplikácie, kde sa nachádzajú zahashované heslá užívateľov a analýzy zdrojového kódu backendu webovej aplikácie. Úlohou študenta bude použiť logiku zdrojového kódu webovej aplikácie, ktorá sa stará o hashovanie a ukladanie hesiel do databázy a použiť ju do vlastnej implementácie slovníkového útoku.
+Úloha pozostáva z analýzy zdrojového kódu webovej aplikácie a súboru s niekoľkými MD5 hashmi hesiel užívateľov. Úlohou študenta bude použiť logiku zdrojového kódu webovej aplikácie, ktorá sa stará o hashovanie a ukladanie hesiel do databázy a použiť ju do vlastnej implementácie slovníkového útoku.
 
 Zdrojový kód zodpovedný za hashovanie hesiel používa hash typu MD5, avšak heslá užívateľov sú solené fixnou hodnotou dostupnou len z backendu a heslo prejde hashovacou funkciou niekoľko krát. Hash je teda vo formáte MD5 ale na jeho cracknutie nestačí software ako john alebo hashcat (základná konfigurácia bez zásahu do zdrojového kódu), študent musí slovníkový útok implementovať vlastným spôsobom.
 
@@ -18,7 +18,7 @@ Po cracknutí hesla administrátora sa bude môcť študent do webovej aplikáci
 zdrojovom kóde. Je potrebné použiť a vhodným spôsobom upraviť funkciu starajúcu sa o hashovanie a ukladanie do databázy a prispôsobiť na slovníkový útok vo vlastnom skripte.
 2.  Pseudo kód pre implementáciu slovníkového útoku
 
-```csharp
+```python
 open file:
 	readhashes()
 
@@ -26,7 +26,7 @@ open file:
 		open file:
 			readwordlist()
 
-			foreach password in wordlist:
+			for password in wordlist:
 				hashpassword()
 				
 				if original == hashed_password:
