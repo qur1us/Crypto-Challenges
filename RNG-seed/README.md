@@ -94,8 +94,11 @@ match &request[..] {
 ```
 
 Funkce `add_password` ukládá hesla pro libovolné domény.
+
 Funkce `export_passwords` exportuje uložená hesla do textového souboru s pseudonáhodným název.
+
 Funkce `download_exported_passwords` umožňuje stáhnout libovolný textový soubor vyskytující se v pracovním adresáři aplikace.
+
 Funkce `download_app_log` klientovi zobrazí logovací záznamy z běhu aplikace.
 
 Cílená zranitelnost aplikace se nachází ve funkci `generate_secure_filename`. Funkce používá aktuální systémový čas ve formátu UNIX timestamp jakožto seed pro generování náhodného názvu souboru. Stejný timestamp ovšem použije i pro logovací zprávu "Random filename generated" a tím jej odhalí všem klientům aplikace.
