@@ -44,5 +44,11 @@ Pokud $B = 1$, pak  $k = B^a = 1^a = 1$.
 
 Pomocí získaného $k$ pak může dešifrovat obdrženou zprávu a získat tak vlajku.
 
+# Nápovědy
+1. Zaměřte se na to jakým způsobem aplikace vypočítá klíč $k$, kterým zašifruje text vlajky.
+2. Zkuste odeslat takové $B$, aby dohodnutý šifrovací klíč $k$ byl předvídatelný.
+3. Zkuste odeslat $B=1$.
+4. Bude obsahovat text vlajky.
+
 # Řešení
 K řešení úlohy lze využít [tento](solver.py) script.
