@@ -3,12 +3,15 @@
 ## Nápovědy
 
 **Požádat o nápovědu 1 (penalizace 25 %)**
+
 Zaměř se na společné parametry obdržených zpráv.
 
 **Požádat o nápovědu 2 (penalizace 50 %)**
+
 Zkus vyhledat více informací k útoku na společný modulus (RSA common modulus attack).
 
 **Požádat o nápovědu 3 (penalizace 75 %)**
+
 Útok na společný modulus je vhodně popsán [zde](https://infosecwriteups.com/rsa-attacks-common-modulus-7bdb34f331a5#84d1).
 
 **Požádat o nápovědu 4 (penalizace 100 %)**
@@ -20,12 +23,15 @@ Zkus vyhledat více informací k útoku na společný modulus (RSA common modulu
 ## Nápovědy
 
 **Požádat o nápovědu 1 (penalizace 25 %)**
+
 Zaměř se na to jakým způsobem aplikace vypočítá klíč $k$, kterým zašifruje text vlajky.
 
 **Požádat o nápovědu 2 (penalizace 50 %)**
+
 Zkus odeslat takové $B$, aby dohodnutý šifrovací klíč $k$ byl předvídatelný.
 
 **Požádat o nápovědu 3 (penalizace 75 %)**
+
 Zkus odeslat $B=1$.
 
 **Požádat o nápovědu 4 (penalizace 100 %)**
@@ -129,9 +135,19 @@ def main():
 
 # Otázky
 
-## 1. 
+## 1. Jakým způsobem by bylo možné zranitelnost odstranit?
 
-## 2.
+1. Zvýšit bitovou velikost generovaných prvočísel (`BITSIZE`) na hodnotu alespoň $8192$.
+2. **Prvočísla generovat v rámci funkce `rsa_keygen()`, namísto `handleIncomingRequest()`**.
+3. Přičtením veřejných klíčů ke společnému modulu.
+4. Zavedením takového paddingu, aby šifrovaná zpráva přesahovala modulus.
+
+## 2.Zranitelnost aplikace spočívá v:
+
+1. Použití nedostatečně velkého prvočísla ($2048$ bitů).
+2. Použití AES256-GCM z knihovny `Crypto.Cipher` pro `python` k šifrování vlajky.
+3. **Absenci validace soukromých (a tedy i veřejných parametrů).**
+4. Absenci validace TLS certifikátu pro navázané TCP spojení.
 
 ## 3. Ktoré tvrdenia nie sú správe?
 
