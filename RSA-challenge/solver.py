@@ -80,7 +80,7 @@ def hex2int(string):
     
 
 def main():
-    parser = argparse.ArgumentParser(prog='RSA_challenge_solver', description='Solves RSA challenge created for VUT CyberRange. Developed by team of OSCP owners.')
+    parser = argparse.ArgumentParser(prog='RSA_challenge_solver')
     parser.add_argument('-i', '--ip', dest='ip', required=True, type=str)
     parser.add_argument('-p', '--port', dest='port', required=True, type=int)
     args = parser.parse_args()

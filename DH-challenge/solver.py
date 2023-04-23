@@ -40,7 +40,7 @@ def decrypt(json_input, shared_secret: int) -> str:
 	return plaintext.decode('utf-8')
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(prog='DH_challenge_solver', description='Solves DH challenge created for VUT CyberRange. Developed by team of OSCP owners.')
+    parser = argparse.ArgumentParser(prog='DH_challenge_solver')
     parser.add_argument('-i', '--ip', dest='ip', required=True, type=str)
     parser.add_argument('-p', '--port', dest='port', required=True, type=int)
     args = parser.parse_args()
