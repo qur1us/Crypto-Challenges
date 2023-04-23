@@ -1,17 +1,18 @@
 #!/usr/bin/python3
-import os
 import sys
 import hashlib
 
 # INPLEMENTING THIS CUSTOM FUNCTION TO CRACK THE HASHES
 #
 # const salt = "za1&P^tMvkvz#Xe%7B4j"
-        
-#     let hash = password
-    
-#     for (let i = 0; i <= 1337; i++) {
-#         hash = crypto.createHash("md5").update(hash + salt).digest("hex");
-#     }
+#       
+# let hash = password
+#
+# for (let i = 0; i <= 1337; i++) {
+#     hash = crypto.createHash("md5").update(hash + salt).digest("hex");
+# }
+#     
+# return hash
 
 
 def main():
@@ -49,6 +50,7 @@ def main():
             
             if not cracked:
                 print("\r[-] Failed to crack.\n")
+
 
 if __name__ == '__main__':
     main()

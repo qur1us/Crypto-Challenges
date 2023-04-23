@@ -49,7 +49,7 @@ router.post("/auth/login", logRequest, (req, res) => {
         // session authentication and redirect to /dashboard to show 
         // the flag.
         if (row !== undefined) {
-            console.log(`[+] Login successful. => ${username}:${password}`);
+            console.log(`[+] Login successful => ${username}:${password}`);
 
             const cookie = JSON.stringify({
                 "username": username,

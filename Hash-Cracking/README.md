@@ -4,25 +4,21 @@
 
 Úloha pozostáva z analýzy úniku databádzy webovej aplikácie, kde sa nachádzajú zahashované heslá užívateľov a analýzy zdrojového kódu backendu webovej aplikácie. Úlohou študenta bude použiť logiku zdrojového kódu webovej aplikácie, ktorá sa stará o hashovanie a ukladanie hesiel do databázy a použiť ju do vlastnej implementácie slovníkového útoku.
 
-Zdrojový kód zodpovedný za hashovanie hesiel používa hash typu MD5, avšak heslá užívateľov sú solené fixnou hodnotou dostupnou len z backendu a heslo prejde hashovacou funkciou niekoľko krát. Hash je teda vo formáte MD5 ale na jeho cracknutie nestačí software ako john alebo hashcat, študent musí slovníkový útok implementovať vlastným spôsobom.
+Zdrojový kód zodpovedný za hashovanie hesiel používa hash typu MD5, avšak heslá užívateľov sú solené fixnou hodnotou dostupnou len z backendu a heslo prejde hashovacou funkciou niekoľko krát. Hash je teda vo formáte MD5 ale na jeho cracknutie nestačí software ako john alebo hashcat (základná konfigurácia bez zásahu do zdrojového kódu), študent musí slovníkový útok implementovať vlastným spôsobom.
 
 K úlohe je dostupná aj webová aplikácia obsahujúca správu o tom, že chod webové stránky je kvôli kybernetickému útoku pozastavený a poskytne študentovi prihlasovací formulár pre administrátora webového serveru.
 
 Po cracknutí hesla administrátora sa bude môcť študent do webovej aplikácie prihlásiť a tá mu poskytne flag a úloha bude považovaná za splnenú.
-
-### Priebeh úlohy
-
-#todo 
 
 ### Nápovede
 
 Úloha bude obsahovať celkom 4 nápovede, každá bude dostupná s penalizáciou 25% bodového zisku za túto úlohu:
 
 1.  Necrackovať pomocou software ako hashcat či john. Preskúmať akým spôsobom funguje hashovanie hesiel v 
-backende (priložený zdrojový kód). Je potrebné použiť a vhodným spôsobom upraviť funkciu starajúcu sa o hashovanie a ukladanie do databázy a prispôsobiť na slovníkový útok vo vlastnom skripte.
+zdrojovom kóde. Je potrebné použiť a vhodným spôsobom upraviť funkciu starajúcu sa o hashovanie a ukladanie do databázy a prispôsobiť na slovníkový útok vo vlastnom skripte.
 2.  Pseudo kód pre implementáciu slovníkového útoku
 
-```text
+```csharp
 open file:
 	readhashes()
 
@@ -105,11 +101,13 @@ Aplikácia obsahuje celkovo 4 routy, z toho 3 používajúce metódu `GET` a jed
 Súbor `database.js` obsahuje všetky potrebné funkcie pre prácu s `sqlite3` databázou. Samotná databáza sa vytvorí a naplní užívateľmi a heslami pri každom behu webovej aplikácie.
 
 ```js
+// Create the database and fill it with users and their passwords
 const db = new Database("webapp.db");
 
-// Init
 db.connect();
 db.init();
+
+// Add users
 db.addUser("admin", "billabong");
 db.addUser("jack", "gasdgasdasdgasdgasdfasgrsgh");
 db.addUser("alan", "cora2nasgadfhadfgasdfblack2");
@@ -132,7 +130,7 @@ static hashPassword(password) {
     }
 ```
 
-Funkcia používa `salt`, ktorý pridáva za originálne heslo zadané používateľom. Nový hash hashuje 1337 krát a vždy k novému hashu pridá `salt`. Tým sa zaistí necrackovateľnosť bežným software ako [john](https://github.com/openwall/john) či [hashcat](https://hashcat.net/hashcat/).
+Funkcia používa `salt`, ktorý pridáva za originálne heslo zadané používateľom. Nový hash hashuje 1337 krát a vždy k novému hashu pridá `salt`. Tým sa zaistí necrackovateľnosť bežným software ako [john](https://github.com/openwall/john) či [hashcat](https://hashcat.net/hashcat/) (základná konfigurácia bez zásahu do zdrojového kódu).
 
 ### Logovanie
 
@@ -146,7 +144,10 @@ Webová aplikácia poskytuje aj jednoduché konzolové logovanie jednotlivých r
 GET / from ::ffff:192.168.220.1
 GET /login from ::ffff:192.168.220.1
 POST /auth/login from ::ffff:192.168.220.1
-[+] Login successful.
+[-] Login failed => admin:wrongpassword
+GET /login from ::ffff:192.168.220.1
+POST /auth/login from ::ffff:192.168.220.1
+[+] Login successful => admin:billabong
 GET /dashboard from ::ffff:192.168.220.1
 ```
 
@@ -171,10 +172,23 @@ GET /dashboard from ::ffff:192.168.220.1
 
 ## Inštalácia balíčkov a spustenie webovej aplikácie
 
+Inštalácia:
+
 ```text
-➜  src git:(main) ✗ npm install
-.
-.
+cd Hash-Cracking/src
+npm install
+```
+
+Spustenie webovej aplikácie:
+
+```text
+cd Hash-Cracking/src
+node index.js
+```
+
+Úspešné spustenie aplikácie by malo vyzerať nasledovne:
+
+```text
 ➜  src git:(main) ✗ node index.js
 [+] App is running on port 3000.
 
@@ -186,7 +200,7 @@ GET /dashboard from ::ffff:192.168.220.1
 
 ## Riešenie
 
-Študent nemôže použiť nástroje ako [john](https://github.com/openwall/john) či [hashcat](https://hashcat.net/hashcat/) ale musí vytvoriť vlastné riešenie. Súbor s implementovaným hashovacím algoritmu bude študentom poskytnutý spolu s uniknutými hashmi z databázy a slovníkom, ktorý budú môcť použiť.
+Študent nemôže použiť nástroje ako [john](https://github.com/openwall/john) či [hashcat](https://hashcat.net/hashcat/) (základná konfigurácia bez zásahu do zdrojového kódu), ale musí vytvoriť vlastné riešenie. Súbor s implementovaným hashovacím algoritmu bude študentom poskytnutý spolu s uniknutými hashmi z databázy a slovníkom, ktorý budú môcť použiť. Ukážkové riešenie je možné vidieť v python3 skripte [tu](./solution/kraken.py).
 
 ```text
 ➜  Hash-Cracking git:(main) ✗ python3 solution/kraken.py solution/leak.txt solution/wordlist.txt
